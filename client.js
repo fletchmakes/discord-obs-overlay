@@ -15,7 +15,11 @@ app.get('/', (req, res) => {
 
 app.post('/message', (req, res) => {
   // console.log('Got body:', req.body);
-  io.emit('new-message', { message: req.body.message, author: req.body.author })
+  io.emit('new-message', { 
+    message: req.body.message, 
+    author: req.body.author, 
+    color: req.body.color
+  });
   res.sendStatus(201);
 });
 
