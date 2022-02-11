@@ -1,0 +1,27 @@
+{
+  "name": "discord-obs-overlay",
+  "version": "1.0.0",
+  "description": "chat overlay from Discord as browser source",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "body-parser": "^1.19.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "socket.io": "^4.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/david-fletcher/discord-obs-overlay.git"
+  },
+  "author": "David Fletcher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/david-fletcher/discord-obs-overlay/issues"
+  },
+  "homepage": "https://github.com/david-fletcher/discord-obs-overlay#readme"
+}
