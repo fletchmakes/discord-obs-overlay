@@ -2,16 +2,42 @@
 
 <html>
     <head>
-        <title>Hello world</title>
+        <title>Discord OBS Chat Overlay</title>
         <meta charset="utf-8">
+
+        <!-- BOOSTRAP 5.1.3 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+        <style>
+            .messages {
+                background-color: rgb(43, 43, 43);
+                color: cornsilk;
+            }
+
+            @keyframes append-animate {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0%);
+                    opacity: 1;	
+                }
+            }
+
+            /* animate new message */
+            .new-message {
+                animation: append-animate .1s linear;
+            }
+        </style>
     </head>
 
-    <body>
-        <h1>MESSAGE PANE</h1>
-
-        <div id="messages">
-            <!-- left empty -->
-            <span>messages go here</span>
+    <body style="background-color: rgb(43, 43, 43);">
+        <div class="container-fluid justify-content-center">
+            <div id="messages" class="col m-3 messages">
+                <!-- left empty -->
+            </div>
         </div>
 
         <script src="/socket.io/socket.io.js"></script>
@@ -19,10 +45,43 @@
             // set up the socket to listen
             const socket = io();
             socket.on('new-message', function(data) {
-                const div = document.createElement('div');
-                const text = document.createTextNode(data.message);
-                div.appendChild(text);
-                messages.appendChild(div);
+                // basic data construction
+                const card = document.createElement('div');
+                const body = document.createElement('div')
+                const text = document.createElement('p');
+                const message = document.createTextNode(data.message);
+                text.appendChild(message);
+
+                const title = document.createElement('h5');
+                const author = document.createTextNode(data.author);
+                title.appendChild(author);
+
+                body.appendChild(title);
+                body.appendChild(text);
+
+                card.appendChild(body);
+
+                // styling
+                card.classList.add('card');
+                card.classList.add('my-2');
+                card.classList.add('messages');
+                card.classList.add('new-message');
+                card.style.cssText += "max-width: 50rem; border-width: 0px;"
+
+                body.classList.add('card-body');
+
+                text.classList.add('card-text');
+                text.style.cssText += "font-size: 2em;"
+
+                title.classList.add('card-title');
+                title.style.cssText += "font-size: 1.875em;"
+
+                // add to DOM
+                const messages = document.getElementById('messages');
+                messages.appendChild(card);
+
+                // scroll to position
+                window.scrollTo(0,document.body.scrollHeight);
             });
         </script>
     </body>

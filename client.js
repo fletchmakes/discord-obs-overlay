@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const http = require('http');
 const server = http.createServer(app);
@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/message', (req, res) => {
-  console.log('Got body:', req.body);
-  io.emit('new-message', { message: req.body.message })
+  // console.log('Got body:', req.body);
+  io.emit('new-message', { message: req.body.message, author: req.body.author })
   res.sendStatus(201);
 });
 
